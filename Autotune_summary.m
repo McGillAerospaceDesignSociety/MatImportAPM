@@ -1,44 +1,54 @@
 close all; clc
 
-Axis = data.Axis;
+Axis = data.ATUN.Axis;
 
 RLL = numel(Axis(Axis == 0));
 PIT = RLL + numel(Axis(Axis == 1));
 YAW = PIT +numel(Axis(Axis == 2));
 
-roll_rate_P = data.RP(1:RLL,:);
-roll_rate_D = data.RD(1:RLL,:);
-roll_P = data.SP(1:RLL,:);
+roll_rate_P = data.ATUN.RP(1:RLL,:);
+roll_rate_D = data.ATUN.RD(1:RLL,:);
+roll_P = data.ATUN.SP(1:RLL,:);
 RLLprog = linspace(1,100,RLL);
 
 figure
-    plot(RLLprog, roll_rate_P, RLLprog, roll_rate_D, RLLprog, roll_P);
+    plot(RLLprog, roll_rate_P, RLLprog, roll_rate_D);
+    hold on
+    yyaxis right
+    plot(RLLprog, roll_P);
+    hold off
     title('Roll');
     xlabel('Tuning progress');
     ylabel('Value');
     legend('rate K_P', 'rate K_D', 'angle K_P');
 
-pitch_rate_P = data.RP(RLL:PIT,:);
-pitch_rate_D = data.RD(RLL:PIT,:);
-pitch_P = data.SP(RLL:PIT,:);
+pitch_rate_P = data.ATUN.RP(RLL:PIT,:);
+pitch_rate_D = data.ATUN.RD(RLL:PIT,:);
+pitch_P = data.ATUN.SP(RLL:PIT,:);
 PITprog = linspace(1,100,PIT-RLL+1);
 
 figure
-    plot(PITprog, pitch_rate_P, PITprog, pitch_rate_D, PITprog, pitch_P);
-    plot(RLLprog, roll_rate_P, RLLprog, roll_rate_D, RLLprog, roll_P);
+    plot(PITprog, pitch_rate_P, PITprog, pitch_rate_D);
+    hold on
+    yyaxis right
+    plot(PITprog, pitch_P);
+    hold off
     title('Pitch');
     xlabel('Tuning progress');
     ylabel('Value');
     legend('rate K_P', 'rate K_D', 'angle K_P');
 
-yaw_rate_P = data.RP(PIT:YAW,:);
-yaw_rate_D = data.RD(PIT:YAW,:);
-yaw_P = data.SP(YAW:YAW,:);
+yaw_rate_P = data.ATUN.RP(PIT:YAW,:);
+yaw_rate_D = data.ATUN.RD(PIT:YAW,:);
+yaw_P = data.ATUN.SP(PIT:YAW,:);
 YAWprog = linspace(1,100,YAW-PIT+1);
 
 figure
-    plot(YAWprog, yaw_rate_P, YAWprog, yaw_rate_D, YAWprog, yaw_P);
-    plot(RLLprog, roll_rate_P, RLLprog, roll_rate_D, RLLprog, roll_P);
+    plot(YAWprog, yaw_rate_P, YAWprog, yaw_rate_D);
+    hold on
+    yyaxis right
+    plot(YAWprog, yaw_P);
+    hold off
     title('Yaw');
     xlabel('Tuning progress');
     ylabel('Value');
