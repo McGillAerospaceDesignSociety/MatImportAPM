@@ -1,5 +1,5 @@
 close all; clc;
-
+clear data
 log = who;
 
 for i = 1:numel(log)
@@ -9,7 +9,7 @@ for i = 1:numel(log)
     if contains(log_str,'label') && ~exist(var_str, 'var')
         clear(log_str); 
     else
-        if contains(log_str, 'label')
+        if contains(log_str, 'label') && ~contains(log_str, ['ans','log'])
             var = erase(log_str, '_label');
             temp_var = eval(var);
             [~, col] = size(temp_var);
@@ -24,6 +24,9 @@ for i = 1:numel(log)
     end
 end
 
-save('APMdata.mat', 'data');
+[n,~] = size(PARM);
+for i = 1:n
+    data.PARM.(char(PARM(i,1))) = PARM{i,2};
+end
 
-clear row col temp_var temp_lbl log log_str i j lbl var
+clearvars -except data
